@@ -508,7 +508,7 @@
                       <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="btnGeriAktar1" pref="122" max="32767" attributes="0"/>
+                              <Component id="btnHepsiniSil" pref="122" max="32767" attributes="0"/>
                               <Component id="btnGeriAktar" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -530,7 +530,7 @@
                       <Group type="102" attributes="0">
                           <Component id="btnGeriAktar" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnGeriAktar1" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnHepsiniSil" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="0" pref="10" max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -626,12 +626,12 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGeriAktarActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnGeriAktar1">
+        <Component class="javax.swing.JButton" name="btnHepsiniSil">
           <Properties>
             <Property name="text" type="java.lang.String" value="Hepsini Sil"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGeriAktar1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnHepsiniSilActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

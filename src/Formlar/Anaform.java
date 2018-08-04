@@ -68,7 +68,7 @@ public class Anaform extends javax.swing.JFrame {
         Tablo = new javax.swing.JTable();
         btnYazdir = new javax.swing.JButton();
         btnGeriAktar = new javax.swing.JButton();
-        btnGeriAktar1 = new javax.swing.JButton();
+        btnHepsiniSil = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Yolluk Programı");
@@ -341,10 +341,10 @@ public class Anaform extends javax.swing.JFrame {
             }
         });
 
-        btnGeriAktar1.setText("Hepsini Sil");
-        btnGeriAktar1.addActionListener(new java.awt.event.ActionListener() {
+        btnHepsiniSil.setText("Hepsini Sil");
+        btnHepsiniSil.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGeriAktar1ActionPerformed(evt);
+                btnHepsiniSilActionPerformed(evt);
             }
         });
 
@@ -358,7 +358,7 @@ public class Anaform extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnGeriAktar1, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
+                            .addComponent(btnHepsiniSil, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
                             .addComponent(btnGeriAktar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnYazdir, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -375,7 +375,7 @@ public class Anaform extends javax.swing.JFrame {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(btnGeriAktar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnGeriAktar1)
+                        .addComponent(btnHepsiniSil)
                         .addGap(0, 10, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -496,9 +496,20 @@ public class Anaform extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnGeriAktarActionPerformed
 
-    private void btnGeriAktar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGeriAktar1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnGeriAktar1ActionPerformed
+    private void btnHepsiniSilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHepsiniSilActionPerformed
+
+        try {
+            int cevap = JOptionPane.showConfirmDialog(this, "Tüm Kayıtlar Silinecek!!", "Uyarı",2);
+            if (cevap == 0) {
+                data = new DatabaseClass();
+                data.DeleteAllRecord();
+                Liste();
+            }
+
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(Anaform.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnHepsiniSilActionPerformed
 
     public void Liste() throws ClassNotFoundException, SQLException {
         data = new DatabaseClass();
@@ -544,7 +555,7 @@ public class Anaform extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable Tablo;
     private javax.swing.JButton btnGeriAktar;
-    private javax.swing.JButton btnGeriAktar1;
+    private javax.swing.JButton btnHepsiniSil;
     private javax.swing.JButton btnHesapla;
     private javax.swing.JButton btnTabloyaAktar;
     private javax.swing.JButton btnYazdir;

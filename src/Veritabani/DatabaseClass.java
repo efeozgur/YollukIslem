@@ -72,4 +72,11 @@ public class DatabaseClass {
         stm=con.createStatement();
         stm.executeUpdate(sql);
     }
+    
+    public void DeleteAllRecord() throws ClassNotFoundException, SQLException {
+        Baglanti();
+        String sql= "delete from kisi";
+        stm = con.createStatement();
+        stm.executeUpdate(sql);
+    }
 }
