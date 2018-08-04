@@ -1,4 +1,4 @@
-package com.ozgurefe.yolluk;
+package Yolluk;
 
 public interface IYevmiye {
 

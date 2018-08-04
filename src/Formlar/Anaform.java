@@ -1,23 +1,23 @@
-
 package Formlar;
 
 import Veritabani.DatabaseClass;
-import com.ozgurefe.yolluk.Hesap;
-import com.ozgurefe.yolluk.Kisi;
+import Yolluk.Hesap;
+import Yolluk.Kisi;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 public class Anaform extends javax.swing.JFrame {
 
-    DatabaseClass data; 
+    DatabaseClass data;
     Kisi kisi;
     Hesap hesap;
 
-   
     public Anaform() {
         initComponents();
     }
@@ -62,20 +62,36 @@ public class Anaform extends javax.swing.JFrame {
         txTasitSonuc = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         txToplamSonuc = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnTabloyaAktar = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         Tablo = new javax.swing.JTable();
-        btnGetir = new javax.swing.JButton();
+        btnYazdir = new javax.swing.JButton();
+        btnGeriAktar = new javax.swing.JButton();
+        btnGeriAktar1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Yolluk Programı");
+        setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Kişi Bilgileri"));
 
         jLabel1.setText("Adı Soyadı");
 
+        txAdSoyad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txAdSoyadKeyPressed(evt);
+            }
+        });
+
         jLabel2.setText("Ünvanı");
+
+        cmbUnvan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hakim / Savcı", "Yazı İşleri Müdürü", "İcra Müdürü", "Zabıt Katibi", "Mübaşir", "Hizmetli" }));
 
         jLabel3.setText("Nereden");
 
@@ -110,9 +126,9 @@ public class Anaform extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txNereye)
                     .addComponent(txNereden)
-                    .addComponent(cmbUnvan, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cmbUnvan, 0, 149, Short.MAX_VALUE)
                     .addComponent(txAdSoyad)
-                    .addComponent(cmbAkrabalikDerecesi, 0, 149, Short.MAX_VALUE)
+                    .addComponent(cmbAkrabalikDerecesi, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txDairesi)
                     .addComponent(txAmirAdi)
                     .addComponent(txAmirUnvani))
@@ -245,7 +261,12 @@ public class Anaform extends javax.swing.JFrame {
 
         txToplamSonuc.setEditable(false);
 
-        jButton1.setText(">");
+        btnTabloyaAktar.setText(">");
+        btnTabloyaAktar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTabloyaAktarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -269,7 +290,7 @@ public class Anaform extends javax.swing.JFrame {
                     .addComponent(txToplamSonuc, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txTasitSonuc, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addComponent(btnTabloyaAktar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -277,7 +298,7 @@ public class Anaform extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnTabloyaAktar, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel13)
@@ -293,23 +314,37 @@ public class Anaform extends javax.swing.JFrame {
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
+        Tablo.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         Tablo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {},
-                {},
-                {},
-                {}
+
             },
             new String [] {
-
+                "id", "Adı Soyadı", "Ünvanı", "Gösterge", "Yevmiye", "Yol Ücreti", "Toplam"
             }
         ));
+        Tablo.setColumnSelectionAllowed(true);
+        Tablo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TabloMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(Tablo);
+        Tablo.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
-        btnGetir.setText("Getir");
-        btnGetir.addActionListener(new java.awt.event.ActionListener() {
+        btnYazdir.setText("YAZDIR");
+
+        btnGeriAktar.setText("<");
+        btnGeriAktar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGetirActionPerformed(evt);
+                btnGeriAktarActionPerformed(evt);
+            }
+        });
+
+        btnGeriAktar1.setText("Hepsini Sil");
+        btnGeriAktar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGeriAktar1ActionPerformed(evt);
             }
         });
 
@@ -317,21 +352,32 @@ public class Anaform extends javax.swing.JFrame {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnGetir)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnGeriAktar1, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
+                            .addComponent(btnGeriAktar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnYazdir, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnGetir))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnYazdir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(btnGeriAktar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnGeriAktar1)
+                        .addGap(0, 10, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -347,7 +393,7 @@ public class Anaform extends javax.swing.JFrame {
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -370,32 +416,102 @@ public class Anaform extends javax.swing.JFrame {
 
     private void btnHesaplaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHesaplaActionPerformed
         try {
-            DecimalFormat df= new DecimalFormat("#.##");
-            kisi = new Kisi(txAdSoyad.getText(), "yim", txNereden.getText(), txNereye.getText(), cmbAkrabalikDerecesi.getSelectedItem().toString(), txDairesi.getText(), txAmirAdi.getText(), txAmirUnvani.getText(), 2018);
+            DecimalFormat df = new DecimalFormat("#.##");
+            kisi = new Kisi(txAdSoyad.getText(), cmbUnvan.getSelectedItem().toString(), txNereden.getText(), txNereye.getText(), cmbAkrabalikDerecesi.getSelectedItem().toString(), txDairesi.getText(), txAmirAdi.getText(), txAmirUnvani.getText(), 2018);
             hesap = new Hesap(kisi, cmbGosterge.getSelectedIndex() + 1, Integer.parseInt(txKm.getText().toString()), Double.parseDouble(txBiletUcret.getText()), cmbYolculukSuresi.getSelectedIndex() + 1);
             txYevmiyeSonuc.setText(String.valueOf(df.format(hesap.yevmiyeHesap())));
             txMesafeSonuc.setText(String.valueOf(df.format(hesap.yolMesafeUcreti())));
             txTasitSonuc.setText(String.valueOf(df.format(hesap.getTasitUcreti())));
             txToplamSonuc.setText(String.valueOf(df.format(hesap.Total())));
-            
+
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, "Alanları kontrol edin!");
         }
 
     }//GEN-LAST:event_btnHesaplaActionPerformed
 
-    private void btnGetirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGetirActionPerformed
-        data = new DatabaseClass();
-        try {
-            ResultSet listele = data.Listele();
-            while(listele.next()){
-                System.out.println(listele.getString("yevmiye"));
+    private void btnTabloyaAktarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTabloyaAktarActionPerformed
+        if (!txToplamSonuc.getText().equals("")) {
+            data = new DatabaseClass();
+            try {
+                data.Add(kisi, hesap);
+                Liste();
+
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Anaform.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(Anaform.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-        } catch (ClassNotFoundException | SQLException ex) {
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Tabloya aktarılacak bilgi yok!!\nBilgiler girildiyse Hesapla butonunu kullanın!");
+        }
+    }//GEN-LAST:event_btnTabloyaAktarActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        try {
+            Liste();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Anaform.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
             Logger.getLogger(Anaform.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_btnGetirActionPerformed
+    }//GEN-LAST:event_formWindowActivated
+
+    private void txAdSoyadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txAdSoyadKeyPressed
+        if (Character.isDigit(evt.getKeyChar())) {
+            evt.consume();
+            getToolkit().beep();
+            //JOptionPane.showMessageDialog(this, "Hata");
+        }
+
+    }//GEN-LAST:event_txAdSoyadKeyPressed
+
+    private void TabloMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabloMouseClicked
+        if (evt.getClickCount() == 2) {
+
+        }
+
+
+    }//GEN-LAST:event_TabloMouseClicked
+
+    private void btnGeriAktarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGeriAktarActionPerformed
+        try {
+            DefaultTableModel model = (DefaultTableModel) Tablo.getModel();
+            Object gelenDeger = model.getValueAt(Tablo.getSelectedRow(), 0);
+
+            int yeniDeger = ((Integer) gelenDeger);
+            int sonucDegeri = 0;
+            data = new DatabaseClass();
+
+            ResultSet gelenKayit = data.kaydiBul(yeniDeger);
+            while (gelenKayit.next()) {
+                sonucDegeri = gelenKayit.getInt("id");
+            }
+            data.DeleteRecord(sonucDegeri);
+            Liste();
+
+        } catch (SQLException | ClassNotFoundException | ArrayIndexOutOfBoundsException ex) {
+            JOptionPane.showMessageDialog(this, "Listeden kayıt seçin!!");
+        }
+    }//GEN-LAST:event_btnGeriAktarActionPerformed
+
+    private void btnGeriAktar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGeriAktar1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnGeriAktar1ActionPerformed
+
+    public void Liste() throws ClassNotFoundException, SQLException {
+        data = new DatabaseClass();
+        ResultSet listele = data.Listele();
+        DefaultTableModel model = (DefaultTableModel) Tablo.getModel();
+        model.setRowCount(0);
+        while (listele.next()) {
+            Object[] eklenecekler = {listele.getInt("id"), listele.getString("adsoyad"), listele.getString("unvan"),
+                listele.getString("gosterge"), listele.getString("yevmiye"),
+                listele.getString("yolmesafeucret"), listele.getString("total")};
+            model.addRow(eklenecekler);
+        }
+    }
 
     public static void main(String args[]) {
 
@@ -427,13 +543,15 @@ public class Anaform extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable Tablo;
-    private javax.swing.JButton btnGetir;
+    private javax.swing.JButton btnGeriAktar;
+    private javax.swing.JButton btnGeriAktar1;
     private javax.swing.JButton btnHesapla;
+    private javax.swing.JButton btnTabloyaAktar;
+    private javax.swing.JButton btnYazdir;
     private javax.swing.JComboBox<String> cmbAkrabalikDerecesi;
     private javax.swing.JComboBox<String> cmbGosterge;
     private javax.swing.JComboBox<String> cmbUnvan;
     private javax.swing.JComboBox<String> cmbYolculukSuresi;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -455,7 +573,7 @@ public class Anaform extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField txAdSoyad;
+    public javax.swing.JTextField txAdSoyad;
     private javax.swing.JTextField txAmirAdi;
     private javax.swing.JTextField txAmirUnvani;
     private javax.swing.JTextField txBiletUcret;

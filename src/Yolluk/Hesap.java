@@ -1,10 +1,22 @@
-package com.ozgurefe.yolluk;
+package Yolluk;
 
 public class Hesap implements IYevmiye{
 
     Kisi kisi;
     int gosterge, kacKm, seyahatGun; 
     double tasitUcreti; 
+
+    public int getGosterge() {
+        return gosterge;
+    }
+
+    public int getKacKm() {
+        return kacKm;
+    }
+
+    public int getSeyahatGun() {
+        return seyahatGun;
+    }
 
     public Hesap(Kisi kisi, int gosterge, int kacKm,double  tasitUcreti, int seyahatGun) {
         this.kisi = kisi;

@@ -1,4 +1,4 @@
-package com.ozgurefe.yolluk;
+package Yolluk;
 
 import Formlar.Anaform;
 import java.text.DecimalFormat;

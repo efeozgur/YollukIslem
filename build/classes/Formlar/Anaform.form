@@ -4,11 +4,15 @@
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="title" type="java.lang.String" value="Yolluk Program&#x131;"/>
+    <Property name="resizable" type="boolean" value="false"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
     <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
+  <Events>
+    <EventHandler event="windowActivated" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowActivated"/>
+  </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -34,7 +38,7 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="48" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -88,9 +92,9 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="txNereye" alignment="0" max="32767" attributes="0"/>
                       <Component id="txNereden" alignment="0" max="32767" attributes="0"/>
-                      <Component id="cmbUnvan" alignment="0" max="32767" attributes="0"/>
+                      <Component id="cmbUnvan" alignment="0" pref="149" max="32767" attributes="0"/>
                       <Component id="txAdSoyad" alignment="0" max="32767" attributes="0"/>
-                      <Component id="cmbAkrabalikDerecesi" pref="149" max="32767" attributes="0"/>
+                      <Component id="cmbAkrabalikDerecesi" max="32767" attributes="0"/>
                       <Component id="txDairesi" max="32767" attributes="0"/>
                       <Component id="txAmirAdi" max="32767" attributes="0"/>
                       <Component id="txAmirUnvani" max="32767" attributes="0"/>
@@ -154,6 +158,12 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txAdSoyad">
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txAdSoyadKeyPressed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
@@ -163,7 +173,14 @@
         <Component class="javax.swing.JComboBox" name="cmbUnvan">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="0"/>
+              <StringArray count="6">
+                <StringItem index="0" value="Hakim / Savc&#x131;"/>
+                <StringItem index="1" value="Yaz&#x131; &#x130;&#x15f;leri M&#xfc;d&#xfc;r&#xfc;"/>
+                <StringItem index="2" value="&#x130;cra M&#xfc;d&#xfc;r&#xfc;"/>
+                <StringItem index="3" value="Zab&#x131;t Katibi"/>
+                <StringItem index="4" value="M&#xfc;ba&#x15f;ir"/>
+                <StringItem index="5" value="Hizmetli"/>
+              </StringArray>
             </Property>
           </Properties>
           <AuxValues>
@@ -397,7 +414,7 @@
                       <Component id="txTasitSonuc" min="-2" pref="72" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnTabloyaAktar" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -407,7 +424,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="jButton1" alignment="1" min="-2" pref="54" max="-2" attributes="0"/>
+                      <Component id="btnTabloyaAktar" alignment="1" min="-2" pref="54" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -470,10 +487,13 @@
             <Property name="editable" type="boolean" value="false"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="btnTabloyaAktar">
           <Properties>
             <Property name="text" type="java.lang.String" value="&gt;"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTabloyaAktarActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -482,11 +502,19 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Component id="btnGetir" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" min="-2" pref="334" max="-2" attributes="0"/>
+              <Group type="102" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="btnGeriAktar1" pref="122" max="32767" attributes="0"/>
+                              <Component id="btnGeriAktar" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="btnYazdir" min="-2" pref="276" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -495,11 +523,18 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="jScrollPane1" min="-2" pref="289" max="-2" attributes="0"/>
-                      <Component id="btnGetir" min="-2" max="-2" attributes="0"/>
+                  <Component id="jScrollPane1" min="-2" pref="204" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="btnYazdir" max="32767" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Component id="btnGeriAktar" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="btnGeriAktar1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="10" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -514,25 +549,89 @@
           <SubComponents>
             <Component class="javax.swing.JTable" name="Tablo">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="10" style="0"/>
+                </Property>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="0" rowCount="4"/>
+                  <Table columnCount="7" rowCount="0">
+                    <Column editable="true" title="id" type="java.lang.Object"/>
+                    <Column editable="true" title="Ad&#x131; Soyad&#x131;" type="java.lang.Object"/>
+                    <Column editable="true" title="&#xdc;nvan&#x131;" type="java.lang.Object"/>
+                    <Column editable="true" title="G&#xf6;sterge" type="java.lang.Object"/>
+                    <Column editable="true" title="Yevmiye" type="java.lang.Object"/>
+                    <Column editable="true" title="Yol &#xdc;creti" type="java.lang.Object"/>
+                    <Column editable="true" title="Toplam" type="java.lang.Object"/>
+                  </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
-                  <TableColumnModel selectionModel="0"/>
+                  <TableColumnModel selectionModel="3">
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                  </TableColumnModel>
                 </Property>
+                <Property name="columnSelectionAllowed" type="boolean" value="true"/>
                 <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                   <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="TabloMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JButton" name="btnGetir">
+        <Component class="javax.swing.JButton" name="btnYazdir">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Getir"/>
+            <Property name="text" type="java.lang.String" value="YAZDIR"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnGeriAktar">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&lt;"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGetirActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGeriAktarActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnGeriAktar1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Hepsini Sil"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGeriAktar1ActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
