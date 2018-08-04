@@ -19,9 +19,10 @@ public class DatabaseClass {
     Statement stm; 
  
 
-    public void Baglanti() throws ClassNotFoundException, SQLException {
+    public Connection Baglanti() throws ClassNotFoundException, SQLException {
         Class.forName(JDBC_DRIVER);
         con = DriverManager.getConnection(DB_URL, UserName, Password);
+        return con; 
     }
     
     public ResultSet Listele() throws ClassNotFoundException, SQLException{

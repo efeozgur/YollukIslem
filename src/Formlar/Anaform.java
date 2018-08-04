@@ -1,8 +1,11 @@
 package Formlar;
 
 import Veritabani.DatabaseClass;
+import Yazdirma.Yazdir;
+
 import Yolluk.Hesap;
 import Yolluk.Kisi;
+import java.io.FileNotFoundException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -10,7 +13,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 public class Anaform extends javax.swing.JFrame {
 
@@ -333,6 +335,11 @@ public class Anaform extends javax.swing.JFrame {
         Tablo.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
         btnYazdir.setText("YAZDIR");
+        btnYazdir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnYazdirActionPerformed(evt);
+            }
+        });
 
         btnGeriAktar.setText("<");
         btnGeriAktar.addActionListener(new java.awt.event.ActionListener() {
@@ -416,6 +423,7 @@ public class Anaform extends javax.swing.JFrame {
 
     private void btnHesaplaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHesaplaActionPerformed
         try {
+
             DecimalFormat df = new DecimalFormat("#.##");
             kisi = new Kisi(txAdSoyad.getText(), cmbUnvan.getSelectedItem().toString(), txNereden.getText(), txNereye.getText(), cmbAkrabalikDerecesi.getSelectedItem().toString(), txDairesi.getText(), txAmirAdi.getText(), txAmirUnvani.getText(), 2018);
             hesap = new Hesap(kisi, cmbGosterge.getSelectedIndex() + 1, Integer.parseInt(txKm.getText().toString()), Double.parseDouble(txBiletUcret.getText()), cmbYolculukSuresi.getSelectedIndex() + 1);
@@ -499,7 +507,7 @@ public class Anaform extends javax.swing.JFrame {
     private void btnHepsiniSilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHepsiniSilActionPerformed
 
         try {
-            int cevap = JOptionPane.showConfirmDialog(this, "Tüm Kayıtlar Silinecek!!", "Uyarı",2);
+            int cevap = JOptionPane.showConfirmDialog(this, "Tüm Kayıtlar Silinecek!!", "Uyarı", 2);
             if (cevap == 0) {
                 data = new DatabaseClass();
                 data.DeleteAllRecord();
@@ -510,6 +518,15 @@ public class Anaform extends javax.swing.JFrame {
             Logger.getLogger(Anaform.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnHepsiniSilActionPerformed
+
+    private void btnYazdirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnYazdirActionPerformed
+        Yazdirma.Yazdir yaz = new Yazdir();
+        try {
+            yaz.Raporla();
+        } catch (FileNotFoundException | ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(Anaform.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnYazdirActionPerformed
 
     public void Liste() throws ClassNotFoundException, SQLException {
         data = new DatabaseClass();
